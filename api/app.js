@@ -13,7 +13,18 @@ app.get("/sentiment", (req, res) => {
       language.documents[0].detectedLanguages[0].iso6391Name,
       text,
       sentiment => {
-        res.send(sentiment.documents[0].score.toString());
+        res.header("Content-Type", "application/json");
+        res.send(
+          JSON.stringify(
+            {
+              text: text,
+              language: language.documents[0].detectedLanguages[0].iso6391Name,
+              sentiment: sentiment.documents[0].score.toString()
+            },
+            null,
+            4
+          )
+        );
       }
     )
   );
