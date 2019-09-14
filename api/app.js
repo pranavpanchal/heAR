@@ -34,7 +34,23 @@ app.get("/sentiment", (req, res) => {
   );
 });
 
-app.get("/translate", (req, res) => res.send(getTranslate()));
+app.get("/translate", (req, res) => {
+  // DELETE THIS
+  res.send("test");
+  // DELETE THIS
+  //   text = req.query.text;
+  //   getTranslate(text, translation => {
+  //     res.send(
+  //       JSON.stringify(
+  //         {
+  //           results: { text: text, translation: translation }
+  //         },
+  //         null,
+  //         4
+  //       )
+  //     );
+  //   });
+});
 
 app.listen(port, () =>
   console.log(`ChatterBox app listening on port ${port}!`)

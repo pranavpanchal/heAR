@@ -3,7 +3,7 @@
 const request = require("request");
 const uuidv4 = require("uuid/v4");
 
-module.exports = function() {
+module.exports = function(callback) {
   var key_var = "TRANSLATE_SUBSCRIPTION_KEY";
   if (!process.env[key_var]) {
     throw new Error(
@@ -41,6 +41,7 @@ module.exports = function() {
   };
 
   request(options, function(err, res, body) {
+    callback(body);
     console.log(body);
     console.log(JSON.stringify(body, null, 4));
   });
