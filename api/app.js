@@ -1,6 +1,7 @@
 const express = require("express");
 const getLanguage = require("./src/language");
 const getSentiment = require("./src/sentiment");
+const getTranslate = require("./src/translate");
 const app = express();
 const port = 3000;
 
@@ -33,7 +34,7 @@ app.get("/sentiment", (req, res) => {
   );
 });
 
-app.get("/translate", (req, res) => res.send("Time to translate"));
+app.get("/translate", (req, res) => res.send(getTranslate()));
 
 app.listen(port, () =>
   console.log(`ChatterBox app listening on port ${port}!`)
