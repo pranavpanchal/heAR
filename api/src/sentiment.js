@@ -5,7 +5,7 @@ module.exports = function() {
 
   let https = require("https");
 
-  const key_var = "TEXT_ANALYTICS_SUBSCRIPTION_KEY";
+  const key_var = "DETECT_SENTIMENT_SUBSCRIPTION_KEY";
   if (!process.env[key_var]) {
     throw new Error(
       "please set/export the following environment variable: " + key_var
@@ -13,7 +13,7 @@ module.exports = function() {
   }
   const subscription_key = process.env[key_var];
 
-  const endpoint_var = "TEXT_ANALYTICS_ENDPOINT";
+  const endpoint_var = "DETECT_SENTIMENT_ENDPOINT";
   if (!process.env[endpoint_var]) {
     throw new Error(
       "please set/export the following environment variable: " + endpoint_var
