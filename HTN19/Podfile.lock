@@ -1,0 +1,16 @@
+PODS:
+  - MicrosoftCognitiveServicesSpeech-iOS (1.6.0)
+
+DEPENDENCIES:
+  - MicrosoftCognitiveServicesSpeech-iOS (~> 1.6)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - MicrosoftCognitiveServicesSpeech-iOS
+
+SPEC CHECKSUMS:
+  MicrosoftCognitiveServicesSpeech-iOS: ca23ee6ace9328ede5483feff79fcd6a3b3e2dfb
+
+PODFILE CHECKSUM: 3982e7c048670b851ff59d99595acdbfb043fef6
+
+COCOAPODS: 1.6.1
