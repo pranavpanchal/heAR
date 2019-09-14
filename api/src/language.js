@@ -33,7 +33,7 @@ module.exports = function(callback) {
       let body_ = JSON.parse(body);
       let body__ = JSON.stringify(body_, null, "  ");
       console.log(body__);
-      callback(body__);
+      callback(body_);
     });
     response.on("error", function(e) {
       console.log("Error: " + e.message);
