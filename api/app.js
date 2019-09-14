@@ -17,9 +17,12 @@ app.get("/sentiment", (req, res) => {
         res.send(
           JSON.stringify(
             {
-              text: text,
-              language: language.documents[0].detectedLanguages[0].iso6391Name,
-              sentiment: sentiment.documents[0].score.toString()
+              results: {
+                text: text,
+                language:
+                  language.documents[0].detectedLanguages[0].iso6391Name,
+                sentiment: sentiment.documents[0].score.toString()
+              }
             },
             null,
             4
