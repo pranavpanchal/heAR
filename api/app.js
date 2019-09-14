@@ -9,29 +9,33 @@ app.get("/", (req, res) => res.send("Hello World!"));
 
 app.get("/sentiment", (req, res) => {
   text = req.query.text;
-  getLanguage(text, language =>
-    getSentiment(
-      language.documents[0].detectedLanguages[0].iso6391Name,
-      text,
-      sentiment => {
-        res.header("Content-Type", "application/json");
-        res.send(
-          JSON.stringify(
-            {
-              results: {
-                text: text,
-                language:
-                  language.documents[0].detectedLanguages[0].iso6391Name,
-                sentiment: sentiment.documents[0].score.toString()
-              }
-            },
-            null,
-            4
-          )
-        );
-      }
-    )
-  );
+  if (text) {
+    getLanguage(text, language =>
+      getSentiment(
+        language.documents[0].detectedLanguages[0].iso6391Name,
+        text,
+        sentiment => {
+          res.header("Content-Type", "application/json");
+          res.send(
+            JSON.stringify(
+              {
+                results: {
+                  text: text,
+                  language:
+                    language.documents[0].detectedLanguages[0].iso6391Name,
+                  sentiment: sentiment.documents[0].score.toString()
+                }
+              },
+              null,
+              4
+            )
+          );
+        }
+      )
+    );
+  } else {
+    res.send("please input text as query param");
+  }
 });
 
 app.get("/translate", (req, res) => {
