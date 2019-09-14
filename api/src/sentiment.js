@@ -2,7 +2,7 @@
 
 let https = require("https");
 
-module.exports = function() {
+module.exports = function(language, text, callback) {
   const key_var = "DETECT_SENTIMENT_SUBSCRIPTION_KEY";
   if (!process.env[key_var]) {
     throw new Error(
@@ -30,6 +30,7 @@ module.exports = function() {
       let body_ = JSON.parse(body);
       let body__ = JSON.stringify(body_, null, "  ");
       console.log(body__);
+      callback(body_);
     });
     response.on("error", function(e) {
       console.log("Error: " + e.message);
@@ -57,15 +58,8 @@ module.exports = function() {
     documents: [
       {
         id: "1",
-        language: "en",
-        text:
-          "I really enjoy the new XBox One S. It has a clean look, it has 4K/HDR resolution and it is affordable."
-      },
-      {
-        id: "2",
-        language: "es",
-        text:
-          "Este ha sido un dia terrible, llegué tarde al trabajo debido a un accidente automobilistico."
+        language: language,
+        text: text
       }
     ]
   };

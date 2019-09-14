@@ -1,11 +1,8 @@
 "use strict";
 
 let https = require("https");
-const getSentiment = require("./sentiment");
 
-const text = "This is a document written in English.";
-
-module.exports = function(callback) {
+module.exports = function(text, callback) {
   const key_var = "DETECT_LANGUAGE_SUBSCRIPTION_KEY";
   if (!process.env[key_var]) {
     throw new Error(
