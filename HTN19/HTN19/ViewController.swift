@@ -7,7 +7,14 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
+extension String{
+    func toDouble()-> Double?{
+        return NumberFormatter().number(from:self)?.doubleValue
+    }
+}
 class ViewController: UIViewController {
     var label: UILabel!
     var fromMicButton: UIButton!
@@ -45,7 +52,9 @@ class ViewController: UIViewController {
         }
     }
     
-    func recognizeFromMic() {
+   
+    
+    func recognizeFromMic() ->String {
         var speechConfig: SPXSpeechConfiguration?
         do {
             try speechConfig = SPXSpeechConfiguration(subscription: sub, region: region)
@@ -61,18 +70,64 @@ class ViewController: UIViewController {
         
         reco.addRecognizingEventHandler() {reco, evt in
             print("intermediate recognition result: \(evt.result.text ?? "(no result)")")
-            self.updateLabel(text: evt.result.text, color: .gray)
+            self.updateLabel(text: evt.result.text, color: .gray, emoji: nil)
         }
         
-        updateLabel(text: "Listening ...", color: .gray)
+        updateLabel(text: "Listening ...", color: .gray, emoji: nil)
         print("Listening...")
         
         let result = try! reco.recognizeOnce()
+        
+//        Alamofire.request(urlString!).responseJSON { response in
+//            print(response)
+//            print(response.request)   // original url request
+//            print(response.response) // http url response
+//            print(response.result)  // response serialization result
+//            if let json = JSON(response.result.value) {
+//                print("JSON: \(json)") // serialized json response
+//            }
+//        }
+        
         print("recognition result: \(result.text ?? "(no result)")")
-        updateLabel(text: result.text, color: .black)
+        updateLabel(text: result.text, color: .black, emoji: nil)
+        
+        return result.text!
     }
     
-    func updateLabel(text: String?, color: UIColor) {
+    func getEmotion() {
+        var text = recognizeFromMic()
+        
+        let originalString = "https://htn2019-253000.appspot.com/sentiment?text=\(text)"
+        
+        let urlString = originalString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        
+        var  sentimentNum :Double = 2.0
+        var emotion: String = ""
+        
+        Alamofire.request(urlString!).responseJSON { (responseData) -> Void in
+            if((responseData.result.value) != nil) {
+                let swiftyJsonVar = JSON(responseData.result.value!)
+                print(swiftyJsonVar["results"]["sentiment"])
+                let sentimentStr = swiftyJsonVar["results"]["sentiment"].stringValue
+                print(sentimentStr)
+                sentimentNum = sentimentStr.toDouble()!
+                // print(sentimentNum)
+                if (sentimentNum >= 0 && sentimentNum <= 0.33) {
+                    emotion = "😡"
+                } else if (sentimentNum >= 0.33 && sentimentNum <= 0.66) {
+                    emotion = "😐"
+                } else if (sentimentNum >= 0.66 && sentimentNum <= 1.0) {
+                    emotion = "😀"
+                } else {
+                    emotion = "❓"
+                }
+                
+                print(emotion)
+            }
+        }
+    }
+    
+    func updateLabel(text: String?, color: UIColor, emoji: String?) {
         DispatchQueue.main.async {
             self.label.text = text
             self.label.textColor = color
