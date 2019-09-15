@@ -22,7 +22,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
     private var animationInfo: AnimationInfo?
     
     var finalText:String?
-    
+    var emotion: String = ""
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var speechText: UILabel!
     
@@ -41,7 +41,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         
         var sub: String!
         var region: String!
-        
+    
 
 
         func session(_ session: ARSession, didUpdate frame: ARFrame) {
@@ -95,7 +95,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
         })
 
         private func classifyCurrentImage() {
-              
+            
             let orientation = CGImagePropertyOrientation(rawValue: UInt32(UIDevice.current.orientation.rawValue))
                    
             let requestHandler = VNImageRequestHandler(cvPixelBuffer: currentBuffer!, orientation: orientation!)
@@ -108,18 +108,28 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                        print("Error: Vision request failed with error \"\(error)\"")
                     return
                    }
-      
-                    let plane = SCNPlane(width:  0.05, height: 0.05)
+                var imageName: String?
+                var lastImage: String?
+                var temp: String?
+                    let plane = SCNPlane(width:  0.2, height: 0.2)
                     plane.cornerRadius = 1.0
                     plane.firstMaterial?.transparency = 1.0
-                    var imageName:String = self.getEmotion()
+                    temp = imageName
+                    imageName = self.getEmotion()
+                    lastImage = temp
+                if (lastImage != imageName){
+                    self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+                        node.removeFromParentNode()}
+                    self.sceneView.session.run(ARWorldTrackingConfiguration(), options: [.resetTracking, .removeExistingAnchors])
+                }
                     print(imageName)
-                    let background_image = UIImage(named: imageName)
+                let background_image = UIImage(named: imageName ?? "")
                     let planeNode = SCNNode(geometry: plane)
                     planeNode.geometry?.firstMaterial?.diffuse.contents = background_image
                 planeNode.position = SCNVector3(0, 0, -1)
                     //pt_textNode.addChildNode(planeNode)
                     self.sceneView.scene.rootNode.addChildNode(planeNode)
+                
                 if (self.faceDetectionRequest.results!.count == 0){
                     print("1")
                     self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
@@ -243,7 +253,6 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
               let urlString = originalString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
 
               var  sentimentNum :Double = 2.0
-              var emotion: String = ""
 
               Alamofire.request(urlString!).responseJSON { (responseData) -> Void in
                   if((responseData.result.value) != nil) {
@@ -252,21 +261,26 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                       let sentimentStr = swiftyJsonVar["results"]["sentiment"].stringValue
                       print(sentimentStr)
                       sentimentNum = Double(sentimentStr)!
-                      // print(sentimentNum)
-                      if (sentimentNum >= 0 && sentimentNum <= 0.33) {
-                          emotion = "mad.png"
-                      } else if (sentimentNum >= 0.33 && sentimentNum <= 0.66) {
-                          emotion = "expressionless.png"
-                      } else if (sentimentNum >= 0.66 && sentimentNum <= 1.0) {
-                          emotion = "happy.png"
+                      if (sentimentNum >= 0 && sentimentNum <= 0.143) {
+                          self.emotion = "1.png"
+                      } else if (sentimentNum >= 0.143 && sentimentNum <= 0.286) {
+                          self.emotion = "2.png"
+                      } else if (sentimentNum >= 0.286 && sentimentNum <= 0.429) {
+                          self.emotion = "3.png"
+                      } else if (sentimentNum >= 0.429 && sentimentNum <= 0.572) {
+                        self.emotion = "4.png"
+                      } else if (sentimentNum >= 0.572 && sentimentNum <= 0.715) {
+                        self.emotion = "5.png"
+                      } else if (sentimentNum >= 0.715 && sentimentNum <= 0.858) {
+                        self.emotion = "6.png"
+                      } else if (sentimentNum >= 0.858 && sentimentNum <= 1.0) {
+                        self.emotion = "7.png"
                       } else {
-                          emotion = "❓"
+                          self.emotion = "❓"
                       }
-
-                    print(emotion)
-                   
                   }
               }
+             //print(emotion)
              return(emotion)
           }
 
