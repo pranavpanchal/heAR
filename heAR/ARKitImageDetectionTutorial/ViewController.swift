@@ -126,7 +126,7 @@ class ViewController: UIViewController, ARSCNViewDelegate,ARSessionDelegate {
                 let background_image = UIImage(named: imageName ?? "")
                     let planeNode = SCNNode(geometry: plane)
                     planeNode.geometry?.firstMaterial?.diffuse.contents = background_image
-                planeNode.position = SCNVector3(0, 0, -1)
+                planeNode.position = SCNVector3(0, 0.3, -1)
                     //pt_textNode.addChildNode(planeNode)
                     self.sceneView.scene.rootNode.addChildNode(planeNode)
                 
