@@ -1,16 +1,24 @@
 PODS:
+  - Alamofire (4.9.0)
   - MicrosoftCognitiveServicesSpeech-iOS (1.6.0)
+  - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.5)
   - MicrosoftCognitiveServicesSpeech-iOS (~> 1.6)
+  - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - MicrosoftCognitiveServicesSpeech-iOS
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
+  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
   MicrosoftCognitiveServicesSpeech-iOS: ca23ee6ace9328ede5483feff79fcd6a3b3e2dfb
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 3982e7c048670b851ff59d99595acdbfb043fef6
+PODFILE CHECKSUM: d1e309fb7276bdf10218895cbfa9381929c8be75
 
 COCOAPODS: 1.6.1
