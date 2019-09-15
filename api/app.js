@@ -3,7 +3,7 @@ const getLanguage = require("./src/language");
 const getSentiment = require("./src/sentiment");
 const getTranslate = require("./src/translate");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => res.send("Hello World!"));
 

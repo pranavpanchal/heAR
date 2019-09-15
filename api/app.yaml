@@ -1,0 +1,10 @@
+# [START app_yaml]
+runtime: nodejs
+env: flex
+env_variables:
+  DETECT_SENTIMENT_SUBSCRIPTION_KEY: "7f228e2ee505432e8decda144bac8d45"
+  DETECT_SENTIMENT_ENDPOINT: "https://eastus.api.cognitive.microsoft.com/"
+  TRANSLATE_SUBSCRIPTION_KEY: "c23994f87c824663a039e3659d34ae11"
+  TRANSLATE_ENDPOINT: "https://api.cognitive.microsofttranslator.com/translate"
+  DETECT_LANGUAGE_SUBSCRIPTION_KEY: "32e0fd1165064306a92e6e402d21e723"
+  DETECT_LANGUAGE_ENDPOINT: "https://eastus.api.cognitive.microsoft.com/"
